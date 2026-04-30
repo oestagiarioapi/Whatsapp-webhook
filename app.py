@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import os
 
 app = Flask(__name__)
@@ -7,11 +7,6 @@ app = Flask(__name__)
 def verify():
     token = request.args.get("hub.verify_token")
     if token == os.getenv("VERIFY_TOKEN"):
-        return request.args.get('hub.challenge'), mimetype='text/plain'
+        challenge = request.args.get("hub.challenge")
+        return Response(challenge, mimetype='text/plain')  # ✅ linha 10
     return "Forbidden", 403
-
-@app.route("/webhook", methods=["POST"])
-def webhook():
-    data = request.get_json()
-    # seu processamento aqui
-    return jsonify({"status": "ok"}), 200
