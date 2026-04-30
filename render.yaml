@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: contrato-bot
+    runtime: python
+    region: oregon        # ou frankfurt
+    plan: starter         # pago - não hiberna
+    buildCommand: pip install -r requirements.txt
+    startCommand: >
+      gunicorn app:app
+      --workers 2
+      --bind 0.0.0.0:$PORT
+      --timeout 60
+    healthCheckPath: /webhook
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: WHATSAPP_TOKEN
+        sync: false       # preencher no painel
+      - key: WHATSAPP_PHONE_ID
+        sync: false
+      - key: VERIFY_TOKEN
+        sync: false
+      - key: IRON_PROJECT_ID
+        sync: false
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: /etc/secrets/gcp-key.json
