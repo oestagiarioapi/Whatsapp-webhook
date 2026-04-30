@@ -7,7 +7,7 @@ app = Flask(__name__)
 def verify():
     token = request.args.get("hub.verify_token")
     if token == os.getenv("VERIFY_TOKEN"):
-        return request.args.get('hub.challenge'), mimetype='text/plain',200
+        return request.args.get('hub.challenge'), mimetype='text/plain'
     return "Forbidden", 403
 
 @app.route("/webhook", methods=["POST"])
