@@ -5,8 +5,7 @@ app = Flask(__name__)
 
 @app.route("/ping", methods=["GET"])
 def ping():
-    return "pong", 200
-    
+    return "pong", 200    
 # 2. Rota do Webhook (para a Meta/Facebook validar)
 @app.route("/webhook", methods=["GET"])
 def webhook():
